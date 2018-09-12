@@ -26,3 +26,5 @@ hystrix:
                 isolation:
                     thread:
                         timeoutInMilliseconds: 1000
+to-test:
+    name: 测试读取配置
