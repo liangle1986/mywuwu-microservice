@@ -1,0 +1,52 @@
+spring:
+    application:
+        name: mywuwu-zuul
+server:
+  port: 8073
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8071/eureka/
+    healthcheck:
+        #开启健康检查（需要spring-boot-starter-actuator依赖）
+      enabled: true
+    registry-fetch-interval-seconds: 2
+  instance:
+#    prefer-ip-address: true
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+
+# routes to serviceId
+zuul:
+#  ignored-services: '*'
+  routes:
+    mywuwu-ribbon:
+      path: /mywuwu-ribbon/**
+      serviceId: MYWUWU-RIBBON
+#      禁用filter true
+  FormBodyWrapperFilter:
+    pre:
+      disable: false
+  #是否开启重试功能
+  retryable: true
+#  SendResponseFilter:
+#    post:
+#      disable: true
+host:
+    socket-timeout-millis: 60000
+    connect-timeout-millis: 60000
+    max-per-route-connections: 50
+hystrix:
+    command:
+        default:
+            execution:
+                isolation:
+                    thread:
+                        timeoutInMilliseconds: 60000
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+#对当前服务的重试次数
+  MaxAutoRetries: 2
+#切换相同Server的次数
+  MaxAutoRetriesNextServer: 0

@@ -1,0 +1,28 @@
+spring:
+    application:
+      name: mywuwu-ribbon
+server:
+    port: 8072
+eureka:
+    client:
+      serviceUrl:
+          defaultZone: http://localhost:8071/eureka/
+      healthcheck:
+      #开启健康检查（需要spring-boot-starter-actuator依赖）
+        enabled: true
+      registry-fetch-interval-seconds: 2
+    instance:
+      leaseRenewalIntervalInSeconds: 1
+      leaseExpirationDurationInSeconds: 2
+
+CLINBRAIN-SERVICE:
+    ribbon:
+      NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+
+hystrix:
+    command:
+        default:
+            execution:
+                isolation:
+                    thread:
+                        timeoutInMilliseconds: 1000
