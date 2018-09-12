@@ -1,6 +1,6 @@
-spring:
-    application:
-      name: mywuwu-ribbon
+#spring:
+#    application:
+#      name: mywuwu-ribbon
 server:
     port: 80756
 #eureka:
@@ -15,16 +15,16 @@ server:
 #      leaseRenewalIntervalInSeconds: 1
 #      leaseExpirationDurationInSeconds: 2
 
-CLINBRAIN-SERVICE:
-    ribbon:
-      NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
-
-hystrix:
-    command:
-        default:
-            execution:
-                isolation:
-                    thread:
-                        timeoutInMilliseconds: 1000
+#CLINBRAIN-SERVICE:
+#    ribbon:
+#      NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+#
+#hystrix:
+#    command:
+#        default:
+#            execution:
+#                isolation:
+#                    thread:
+#                        timeoutInMilliseconds: 1000
 paypal:
   mode: live
