@@ -1,6 +1,6 @@
-spring:
-    application:
-        name: mywuwu-zuul
+#spring:
+#    application:
+#        name: mywuwu-zuul
 server:
   port: 8073
 eureka:
