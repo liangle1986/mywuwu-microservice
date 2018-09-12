@@ -2,7 +2,7 @@ spring:
     application:
       name: mywuwu-ribbon
 server:
-    port: 8075
+    port: 8072
 eureka:
     client:
       serviceUrl:
