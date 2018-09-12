@@ -92,7 +92,7 @@
 		<module>mywuwu-eureka</module>
 		<module>mywuwu-zuul</module>
 		<module>mywuwu-ribbon</module>
-		<!--<module>clinbrain-getway</module>-->
+		<module>mywuwu-configserver</module>
 	</modules>
 
 

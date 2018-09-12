@@ -17,10 +17,6 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<properties>
-		<spring-cloud.version>Finchley.M9</spring-cloud.version>
-	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
