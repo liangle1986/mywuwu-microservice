@@ -3,8 +3,10 @@ package com.mywuwu.controller;
 import com.alibaba.fastjson.JSON;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -25,6 +27,7 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin
+@RefreshScope
 public class ConsumerController {
 
     @Autowired
@@ -33,9 +36,13 @@ public class ConsumerController {
     @Autowired
     private LoadBalancerClient loadBalancerClient;
 
+    @Value("${server.port}")
+    private String name;
+
     @RequestMapping(value = "/getsub", method = RequestMethod.GET)
     @HystrixCommand(fallbackMethod = "findOrderFallback")
     public List<Map<String, Object>> sub(Integer a, Integer b) {
+        System.out.println(name + " =================================");
         ServiceInstance instance = this.loadBalancerClient.choose("CLINBRAIN-SERVICE");
         if(instance != null){
             System.out.println("服务名"+ instance.getServiceId() + ";服务链接="+instance.getHost() + ";端口号="+instance.getPort());
