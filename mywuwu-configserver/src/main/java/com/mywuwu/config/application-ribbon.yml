@@ -2,7 +2,7 @@
 #    application:
 #      name: mywuwu-ribbon
 server:
-    port: 8078
+    port: 8072
 eureka:
     client:
       serviceUrl:
@@ -26,5 +26,10 @@ hystrix:
                 isolation:
                     thread:
                         timeoutInMilliseconds: 1000
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh
 paypal:
   mode: live

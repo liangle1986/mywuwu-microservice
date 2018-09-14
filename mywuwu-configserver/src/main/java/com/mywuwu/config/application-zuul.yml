@@ -50,3 +50,8 @@ ribbon:
   MaxAutoRetries: 2
 #切换相同Server的次数
   MaxAutoRetriesNextServer: 0
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh
