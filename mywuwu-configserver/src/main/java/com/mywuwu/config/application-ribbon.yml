@@ -2,7 +2,7 @@
 #    application:
 #      name: mywuwu-ribbon
 server:
-    port: 8072
+    port: 8078
 eureka:
     client:
       serviceUrl:
