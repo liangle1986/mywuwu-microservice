@@ -26,12 +26,13 @@ hystrix:
                 isolation:
                     thread:
                         timeoutInMilliseconds: 1000
+
 management:
   endpoints:
     web:
       exposure:
         include: bus-refresh
-  security:
-    enabled: false
+
+
 paypal:
   mode: live
