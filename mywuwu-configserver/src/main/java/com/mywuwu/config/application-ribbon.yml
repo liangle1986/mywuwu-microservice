@@ -9,7 +9,7 @@ eureka:
           defaultZone: http://localhost:8071/eureka/
       healthcheck:
       #开启健康检查（需要spring-boot-starter-actuator依赖）
-        enabled: false
+        enabled: true
       registry-fetch-interval-seconds: 2
     instance:
       leaseRenewalIntervalInSeconds: 1
@@ -31,5 +31,7 @@ management:
     web:
       exposure:
         include: bus-refresh
+  security:
+    enabled: false
 paypal:
   mode: live
