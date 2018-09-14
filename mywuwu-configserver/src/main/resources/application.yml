@@ -10,3 +10,8 @@ spring:
       label: master
       username: liangle1986@126.com
       password: le5201314
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh

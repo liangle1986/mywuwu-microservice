@@ -36,10 +36,10 @@ public class ConsumerController {
     @Autowired
     private LoadBalancerClient loadBalancerClient;
 
-    @Value("${server.port}")
+    @Value("${paypal.mode}")
     private String name;
 
-    @RequestMapping(value = "/getsub", method = RequestMethod.GET)
+    @RequestMapping(value = "/getsub", method = RequestMethod.POST)
     @HystrixCommand(fallbackMethod = "findOrderFallback")
     public List<Map<String, Object>> sub(Integer a, Integer b) {
         System.out.println(name + " =================================");

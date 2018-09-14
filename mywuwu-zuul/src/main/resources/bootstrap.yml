@@ -1,4 +1,8 @@
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh
 spring:
  application:
   #对应config server中配置文件的{application}
