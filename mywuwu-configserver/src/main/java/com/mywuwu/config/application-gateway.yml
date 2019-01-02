@@ -14,20 +14,20 @@ spring:
         uri: http://www.163.com/
         predicates:
           - Path=/163/**
-      - id: mywuwu-websocket           #网关路由到订单服务order-service
+      - id: mywuwu-websocket          #网关路由到订单服务order-service
         uri: lb:ws://mywuwu/websocket
         predicates:
-          - Path=/mywuwu/websocket/**
-      - id: mywuwu-websocket           #网关路由到订单服务order-service
+          - Path=/MYWUWU-WEBSOCKET/mywuwu/websocket/**
+      - id: MYWUWU-WEBSOCKET        #网关路由到订单服务order-service
         uri: lb://MYWUWU-WEBSOCKET
         predicates:
           - Path=/MYWUWU-WEBSOCKET/**
-      - id: MYWUWU-WEBSOCKET
-        # 重点！lb:ws://代表从注册中心获取服务，并且转发协议为websocket，这种格式怀疑人生！
-        uri: lb:ws://bullet
-        predicates:
-        # 转发/bullet端点下的所有路径
-        - Path=/bullet/**
+#      - id: MYWUWU-WEBSOCKET
+#        # 重点！lb:ws://代表从注册中心获取服务，并且转发协议为websocket，这种格式怀疑人生！
+#        uri: lb:ws://bullet
+#        predicates:
+#        # 转发/bullet端点下的所有路径
+#        - Path=/bullet/**
 #      - id: USER-SERVICE            #网关路由到用户服务user-service
 #        uri: lb://USER-SERVICE
 #        predicates:
