@@ -1,5 +1,5 @@
 server:
-port: 6604
+port: 8077
 
 
 #服务名
@@ -8,10 +8,10 @@ application:
 name: mywuwu-gateway-service
 cloud:
 gateway:
-filter:
-remove-non-proxy-headers:
-headers:
-- dummy
+#filter:
+#remove-non-proxy-headers:
+#headers:
+#- dummy
 routes:
 - id:  mywuwu-ribbon
 # 重点！/info必须使用http进行转发，lb代表从注册中心获取服务
@@ -23,7 +23,7 @@ predicates:
 #而不是我们期望的去掉userapi，只保留**部分
 filters:
 - StripPrefix=1
-- id:  /mywuwu-ribbon
+- id:  mywuwu-ribbon
 uri: lb:ws://mywuwu-ribbon
 predicates:
 - Path=/mywuwu-ribbon/**
