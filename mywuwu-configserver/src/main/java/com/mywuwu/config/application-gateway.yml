@@ -17,7 +17,7 @@ spring:
       - id: websocket          #网关路由到订单服务order-service
         uri: lb:ws://MYWUWU-WEBSOCKET/mywuwu/websocket
         predicates:
-          - Path=/mywuwu/websocket/**
+          - Path=/MYWUWU-WEBSOCKET/mywuwu/websocket/**
       - id: MYWUWU-WEBSOCKET        #网关路由到订单服务order-service
         uri: lb://MYWUWU-WEBSOCKET
         predicates:
