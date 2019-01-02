@@ -1,5 +1,5 @@
 server:
-port: 8077
+port: 8079
 
 
 #服务名
@@ -13,7 +13,7 @@ gateway:
 #headers:
 #- dummy
 routes:
-- id:  mywuwu-ribbon
+- id: mywuwu-ribbon
 # 重点！/info必须使用http进行转发，lb代表从注册中心获取服务
 uri: lb://mywuwu-ribbon
 predicates:
