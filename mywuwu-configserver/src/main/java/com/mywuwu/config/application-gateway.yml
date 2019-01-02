@@ -1,0 +1,37 @@
+server:
+port: 6604
+
+
+#服务名
+spring:
+application:
+name: mywuwu-gateway-service
+cloud:
+gateway:
+filter:
+remove-non-proxy-headers:
+headers:
+- dummy
+routes:
+- id:  mywuwu-ribbon
+# 重点！/info必须使用http进行转发，lb代表从注册中心获取服务
+uri: lb://mywuwu-ribbon
+predicates:
+# 重点！转发该路径！,/userapi/**,
+- Path=/mywuwu-ribbon/**
+# http://localhost:6601/userapi/user/users/2, 必须加上StripPrefix=1，否则访问服务时会带上userapi
+#而不是我们期望的去掉userapi，只保留**部分
+filters:
+- StripPrefix=1
+- id:  /mywuwu-ribbon
+uri: lb:ws://mywuwu-ribbon
+predicates:
+- Path=/mywuwu-ribbon/**
+filters:
+- StripPrefix=1
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8071/eureka/
