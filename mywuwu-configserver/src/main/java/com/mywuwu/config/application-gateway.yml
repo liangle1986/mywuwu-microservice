@@ -14,11 +14,11 @@ spring:
         uri: http://www.163.com/
         predicates:
           - Path=/163/**
-      - id: mywuwu-websocket          #网关路由到订单服务order-service
-        uri: lb:ws://mywuwu/websocket
-        predicates:
-          - Path=/MYWUWU-WEBSOCKET/mywuwu/websocket/**
-      - id: MYWUWU-WEBSOCKET        #网关路由到订单服务order-service
+#      - id: mywuwu-websocket          #网关路由到订单服务order-service
+#        uri: lb:ws://mywuwu/websocket
+#        predicates:
+#          - Path=/MYWUWU-WEBSOCKET/mywuwu/websocket/**
+      - id: mywuwu-websocket        #网关路由到订单服务order-service
         uri: lb://MYWUWU-WEBSOCKET
         predicates:
           - Path=/MYWUWU-WEBSOCKET/**
