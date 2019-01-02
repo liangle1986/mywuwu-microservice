@@ -22,9 +22,6 @@ spring:
         uri: lb://MYWUWU-WEBSOCKET
         predicates:
           - Path=/MYWUWU-WEBSOCKET/**
-        filters:
-          - StripPrefix=1
-          - JwtCheck
 #      - id: MYWUWU-WEBSOCKET
 #        # 重点！lb:ws://代表从注册中心获取服务，并且转发协议为websocket，这种格式怀疑人生！
 #        uri: lb:ws://bullet
@@ -35,12 +32,15 @@ spring:
 #        uri: lb://USER-SERVICE
 #        predicates:
 #          - Pach=/USER-SERVICE/**
-#      - name: Retry
-#        args:
-#          retries: 3 #重试次数，不包含本次，默认3
-#          status: 404 #重试次数，不包含本次，默认无
-#          statusSeries: 500 #重试的系列 100 info 200 success 300 redirect 400 cliet
-#          method: GET #重试请求 默认GET
+        filters:
+          - StripPrefix=1
+          - JwtCheck
+          - name: Retry
+            args:
+              retries: 3 #重试次数，不包含本次，默认3
+              status: 404 #重试次数，不包含本次，默认无
+              statusSeries: 500 #重试的系列 100 info 200 success 300 redirect 400 cliet
+              method: GET #重试请求 默认GET
 
 eureka:
   client:

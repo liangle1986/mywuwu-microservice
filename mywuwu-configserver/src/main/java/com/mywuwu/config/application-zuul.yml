@@ -22,7 +22,7 @@ zuul:
   routes:
     mywuwu-ribbon:
       path: /mywuwu-ribbon/**
-      serviceId: MYWUWU-RIBBON
+      serviceId: mywuwu-ribbon
 #      禁用filter true
   FormBodyWrapperFilter:
     pre:
