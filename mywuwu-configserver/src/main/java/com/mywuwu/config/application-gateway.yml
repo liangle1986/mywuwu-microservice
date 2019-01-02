@@ -35,12 +35,12 @@ spring:
 #        uri: lb://USER-SERVICE
 #        predicates:
 #          - Pach=/USER-SERVICE/**
-      - name: Retry
-        args:
-          retries: 3 #重试次数，不包含本次，默认3
-          status: 404 #重试次数，不包含本次，默认无
-          statusSeries: 500 #重试的系列 100 info 200 success 300 redirect 400 cliet
-          method: GET #重试请求 默认GET
+#      - name: Retry
+#        args:
+#          retries: 3 #重试次数，不包含本次，默认3
+#          status: 404 #重试次数，不包含本次，默认无
+#          statusSeries: 500 #重试的系列 100 info 200 success 300 redirect 400 cliet
+#          method: GET #重试请求 默认GET
 
 eureka:
   client:
