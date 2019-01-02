@@ -19,7 +19,7 @@
 	</parent>
 
 	<properties>
-		<spring-cloud.version>Finchley.M9</spring-cloud.version>
+		<spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
@@ -78,7 +78,7 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>3.0</version>
+			<version>3.5</version>
 		</dependency>
 
 	</dependencies>
@@ -87,6 +87,7 @@
 		<module>mywuwu-zuul</module>
 		<module>mywuwu-ribbon</module>
 		<module>mywuwu-configserver</module>
+		<module>mywuwu-gateway</module>
 	</modules>
 
 
