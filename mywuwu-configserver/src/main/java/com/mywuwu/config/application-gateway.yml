@@ -10,28 +10,21 @@ spring:
         locator:      #路由访问方式：http://Gateway_HOST:Gateway_PORT/大写的serviceId/**，其中微服务应用名默认大写访问。
           enabled: true
       routes:
-      - id: 163                     #网关路由到网易官网
-        uri: http://www.163.com/
-        predicates:
-          - Path=/163/**
+#      - id: 163                     #网关路由到网易官网
+#        uri: http://www.163.com/
+#        predicates:
+#          - Path=/163/**
       - id: MYWUWU-WEBSOCKET          #网关路由到订单服务order-service
         uri: lb:ws://MYWUWU-WEBSOCKET
         predicates:
-          - Path=/mywuwu/websocket/**
-      - id: MYWUWU-WEBSOCKET        #网关路由到订单服务order-service
+          - Path=/MYWUWU-WEBSOCKET/mywuwu/websocket/**
+#        filters:
+#          - StripPrefix=1
+#          - JwtCheck
+      - id: MYWUWU-WEBSOCKET       #网关路由到订单服务order-service
         uri: lb://MYWUWU-WEBSOCKET
         predicates:
           - Path=/MYWUWU-WEBSOCKET/**
-#      - id: MYWUWU-WEBSOCKET
-#        # 重点！lb:ws://代表从注册中心获取服务，并且转发协议为websocket，这种格式怀疑人生！
-#        uri: lb:ws://bullet
-#        predicates:
-#        # 转发/bullet端点下的所有路径
-#        - Path=/bullet/**
-#      - id: USER-SERVICE            #网关路由到用户服务user-service
-#        uri: lb://USER-SERVICE
-#        predicates:
-#          - Pach=/USER-SERVICE/**
         filters:
           - StripPrefix=1
           - JwtCheck
@@ -50,4 +43,3 @@ eureka:
 feign:
   hystrix:
     enabled: true
-
