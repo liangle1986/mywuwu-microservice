@@ -20,9 +20,9 @@ public class JwtCheckGatewayFilterFactory extends AbstractGatewayFilterFactory<J
     }
     @Override
     public GatewayFilter apply(Config config) {
-        return (ServerWebExchange exchange, GatewayFilterChain chain) -> {
-            String jwtToken = exchange.getRequest().getHeaders().getFirst("Authorization");
-            jwtToken = "asdfasfdasdfasfdsa";
+        return (exchange, chain) -> {
+            String jwtToken = exchange.getRequest().getHeaders().getFirst("token");
+//            jwtToken = "asdfasfdasdfasfdsa";
             //校验jwtToken的合法性
             if (jwtToken != null) {
                 // 合法

@@ -1,80 +1,21 @@
-#management:
-#  endpoints:
-#    web:
-#      exposure:
-#        include: bus-refresh
-#
-#spring:
-# application:
-#  #对应config server中配置文件的{application}
-#  name: mywuwu-gateway-service
-# cloud:
-#  config:
-#    #访问config server的地址
-#    uri: http://localhost:8075/
-##    https://github.com/liangle1986/mywuwu-microservice/tree/master/mywuwu-configserver/src/main/java/com/mywuwu/config
-#    #对应config server中配置文件的{profile}
-#    profile: gateway
-#    #对应config server中配置文件的{label}
-#    label: master
-
-
-server:
-  port: 8088
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh
 
 spring:
-  application:
-    name: mywuwu-gateway-service
-  cloud:        # spring cloud gateway 路由配置方式
-    gateway:
-      discovery:      #是否与服务发现组件进行结合，通过 serviceId(必须设置成大写) 转发到具体的服务实例。默认为false，设为true便开启通过服务中心的自动根据 serviceId 创建路由的功能。
-        locator:      #路由访问方式：http://Gateway_HOST:Gateway_PORT/大写的serviceId/**，其中微服务应用名默认大写访问。
-          enabled: true
-      routes:
-#      - id: 163                     #网关路由到网易官网
-#        uri: http://www.163.com/
-#        predicates:
-#          - Path=/163/**
-      - id: MYWUWU-WEBSOCKET          #网关路由到订单服务order-service
-        uri: lb:ws://MYWUWU-WEBSOCKET
-        predicates:
-          - Path=/MYWUWU-WEBSOCKET/mywuwu/websocket/**
-#        filters:
-#          - StripPrefix=1
-#          - JwtCheck
-      - id: MYWUWU-WEBSOCKET       #网关路由到订单服务order-service
-        uri: lb://MYWUWU-WEBSOCKET
-        predicates:
-          - Path=/MYWUWU-WEBSOCKET/**
-#       filters:
-#          - StripPrefix=1
-#          - JwtCheck
-      - id: bullet
-        # 重点！lb:ws://代表从注册中心获取服务，并且转发协议为websocket，这种格式怀疑人生！
-        uri: lb:ws://bullet
-        predicates:
-        # 转发/bullet端点下的所有路径
-        - Path=/bullet/**
-#      - id: USER-SERVICE            #网关路由到用户服务user-service
-#        uri: lb://USER-SERVICE
-#        predicates:
-#          - Pach=/USER-SERVICE/**
-        filters:
-          - StripPrefix=1
-          - JwtCheck
-          - name: Retry
-            args:
-              retries: 3 #重试次数，不包含本次，默认3
-              status: 404 #重试次数，不包含本次，默认无
-              statusSeries: 500 #重试的系列 100 info 200 success 300 redirect 400 cliet
-              method: GET #重试请求 默认GET
+ application:
+  #对应config server中配置文件的{application}
+  name: mywuwu-gateway-service
+ cloud:
+  config:
+    #访问config server的地址
+    uri: http://localhost:8075/
+#    https://github.com/liangle1986/mywuwu-microservice/tree/master/mywuwu-configserver/src/main/java/com/mywuwu/config
+    #对应config server中配置文件的{profile}
+    profile: gateway
+    #对应config server中配置文件的{label}
+    label: master
 
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8071/eureka/
-
-feign:
-  hystrix:
-    enabled: true
 
