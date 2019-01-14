@@ -27,7 +27,7 @@ spring:
           - Path=/MYWUWU-WEBSOCKET/**
         filters:
           - StripPrefix=1
-          - JwtCheck
+          - JWTAuth
           - name: Retry
             args:
               retries: 3 #重试次数，不包含本次，默认3

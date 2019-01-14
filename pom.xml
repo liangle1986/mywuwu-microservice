@@ -83,7 +83,7 @@
 		<module>mywuwu-zuul</module>
 		<module>mywuwu-ribbon</module>
 		<module>mywuwu-configserver</module>
-		<module>mywuwu-gateway</module>
+		<!--<module>mywuwu-gateway</module>-->
 	</modules>
 
 
