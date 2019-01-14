@@ -43,3 +43,49 @@ eureka:
 feign:
   hystrix:
     enabled: true
+
+#数据源配置信息
+datasource:
+  initialSize: 5
+  minIdle: 5
+  maxActive: 20
+  testOnBorrow: true
+  filters:  stat,wall
+#数据源名称
+jdbc:
+  datasources: ds,ds1
+
+#从数据源1
+  ds:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.0.111:3306/test?characterEncoding=utf-8&useSSL=false
+    username: root
+    password: root
+
+  ds1:
+     type: com.alibaba.druid.pool.DruidDataSource
+     driverClassName: com.mysql.jdbc.Driver
+     url: jdbc:mysql://192.168.0.111:3306/test?characterEncoding=utf-8&useSSL=false
+     username: root
+     password: root
+
+#日志
+logging:
+  level:
+    tk:
+      mybatis: TRACE
+
+mybatis:
+  type-aliases-package: com.mywuwu.entity
+  mapper-locations: classpath*:mapper/*.xml
+  mappers: com.mywuwu.common.mapper.MyMapper
+  not-empty: false
+  identity: MYSQL
+
+#分页配置
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count\=countSql
