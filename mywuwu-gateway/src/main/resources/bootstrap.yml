@@ -1,21 +1,144 @@
-management:
-  endpoints:
-    web:
-      exposure:
-        include: bus-refresh
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: bus-refresh
+#
+#spring:
+# application:
+#  #对应config server中配置文件的{application}
+#  name: mywuwu-gateway-service
+# cloud:
+#  config:
+#    #访问config server的地址
+#    uri: http://localhost:8075/
+##    https://github.com/liangle1986/mywuwu-microservice/tree/master/mywuwu-configserver/src/main/java/com/mywuwu/config
+#    #对应config server中配置文件的{profile}
+#    profile: gateway
+#    #对应config server中配置文件的{label}
+#    label: master
+server:
+  port: 8088
 
 spring:
- application:
-  #对应config server中配置文件的{application}
-  name: mywuwu-gateway-service
- cloud:
-  config:
-    #访问config server的地址
-    uri: http://localhost:8075/
-#    https://github.com/liangle1986/mywuwu-microservice/tree/master/mywuwu-configserver/src/main/java/com/mywuwu/config
-    #对应config server中配置文件的{profile}
-    profile: gateway
-    #对应config server中配置文件的{label}
-    label: master
+  application:
+    name: mywuwu-gateway-service
+  cloud:        # spring cloud gateway 路由配置方式
+    gateway:
+      discovery:      #是否与服务发现组件进行结合，通过 serviceId(必须设置成大写) 转发到具体的服务实例。默认为false，设为true便开启通过服务中心的自动根据 serviceId 创建路由的功能。
+        locator:      #路由访问方式：http://Gateway_HOST:Gateway_PORT/大写的serviceId/**，其中微服务应用名默认大写访问。
+          enabled: true
+      routes:
+#      - id: 163                     #网关路由到网易官网
+#        uri: http://www.163.com/
+#        predicates:
+#          - Path=/163/**
+      - id: MYWUWU-WEBSOCKET          #网关路由到订单服务order-service
+        uri: lb:ws://MYWUWU-WEBSOCKET
+        predicates:
+          - Path=/MYWUWU-WEBSOCKET/mywuwu/websocket/**
+#        filters:
+#          - StripPrefix=1
+#          - JwtCheck
+      - id: MYWUWU-WEBSOCKET       #网关路由到订单服务order-service
+        uri: lb://MYWUWU-WEBSOCKET
+        predicates:
+          - Path=/MYWUWU-WEBSOCKET/**
+#        filters:
+##          - StripPrefix=1
+##          - AuthF
+#          - name: Retry
+#            args:
+#              retries: 3 #重试次数，不包含本次，默认3
+#              status: 404 #重试次数，不包含本次，默认无
+#              statusSeries: 500 #重试的系列 100 info 200 success 300 redirect 400 cliet
+#              method: GET #重试请求 默认GET
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8071/eureka/
+
+feign:
+  hystrix:
+    enabled: true
 
 
+#数据源配置信息
+datasource:
+  initialSize: 5
+  minIdle: 5
+  maxActive: 20
+  testOnBorrow: true
+  filters:  stat,wall
+#数据源名称
+jdbc:
+  datasources: ds,ds1
+
+#从数据源1
+  ds:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.0.111:3306/test?characterEncoding=utf-8&useSSL=false
+    username: root
+    password: root
+
+  ds1:
+     type: com.alibaba.druid.pool.DruidDataSource
+     driverClassName: com.mysql.jdbc.Driver
+     url: jdbc:mysql://192.168.0.111:3306/test?characterEncoding=utf-8&useSSL=false
+     username: root
+     password: root
+
+#日志
+logging:
+  level:
+    tk:
+      mybatis: TRACE
+
+mybatis:
+  type-aliases-package: com.mywuwu.entity
+  mapper-locations: classpath*:mapper/*.xml
+mapper:
+  mappers: com.mywuwu.common.mapper.MyMapper
+  not-empty: false
+  identity: MYSQL
+
+#分页配置
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count\=countSql
+
+  #jwt生成密钥
+jwt:
+  secret:
+    key: LIANGLELE
+
+  #token黑名单 存储key
+  blacklist:
+    key:
+      format: JWT_BLACKLIST::%s
+
+
+        #refreshToken 存储key
+  refresh:
+    token:
+      key:
+        format: JWT_REFRESH_TOKEN::%s
+
+#token过期时间：1min
+token:
+  expire:
+    time: 60000
+
+#refreshToken过期时间：2min
+refresh:
+  token:
+    expire:
+      time: 120000
+  #不进行token拦截
+auth:
+  skip:
+    urls: /MYWUWU-GATEWAY-SERVICE/auth,/MYWUWU-GATEWAY-SERVICE/token/refresh,/MYWUWU-GATEWAY-SERVICE/hello
