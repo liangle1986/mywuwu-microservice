@@ -1,6 +1,6 @@
 package com.mywuwu.controller;
 
-import com.mywuwu.annotation.CurrentUser;
+import com.mywuwu.common.annotation.CurrentUser;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

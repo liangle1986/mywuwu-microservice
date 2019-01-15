@@ -1,4 +1,4 @@
-package com.mywuwu.annotation;
+package com.mywuwu.common.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

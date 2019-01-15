@@ -53,6 +53,24 @@ spring:
 #              status: 404 #重试次数，不包含本次，默认无
 #              statusSeries: 500 #重试的系列 100 info 200 success 300 redirect 400 cliet
 #              method: GET #重试请求 默认GET
+#redis配置
+#spring:
+#  redis:
+#  # Redis数据库索引（默认为0）
+#    database: 0
+#    # Redis服务器地址
+#    host: localhost
+#    # Redis服务器连接密码（默认为空）
+#    password: 865151
+#    # Redis服务器连接端口
+#    port: 6379
+#    timeout: 1000 # 连接超时时间（毫秒）
+#    lettuce:
+#      pool:
+#        max-active:  100 # 连接池最大连接数（使用负值表示没有限制）
+#        max-idle: 100 # 连接池中的最大空闲连接
+#        min-idle: 50 # 连接池中的最小空闲连接
+#        max-wait: 6000 # 连接池最大阻塞等待时间（使用负值表示没有限制）
 
 eureka:
   client:

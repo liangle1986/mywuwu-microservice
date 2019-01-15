@@ -1,13 +1,10 @@
 package com.mywuwu;
 
 import com.mywuwu.common.ds.DynamicDataSourceRegister;
-import com.mywuwu.filter.AuthFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import tk.mybatis.spring.annotation.MapperScan;
 

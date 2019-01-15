@@ -1,7 +1,7 @@
-package com.mywuwu.filter;
+package com.mywuwu.common.filter;
 
 
-import com.mywuwu.annotation.CurrentUser;
+import com.mywuwu.common.annotation.CurrentUser;
 import org.springframework.core.MethodParameter;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.support.WebDataBinderFactory;
