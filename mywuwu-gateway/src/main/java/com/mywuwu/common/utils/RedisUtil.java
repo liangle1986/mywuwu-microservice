@@ -20,7 +20,6 @@ public final class RedisUtil {
 
 
     @Autowired
-
     private RedisTemplate<String, Object> redisTemplate;
 
 
@@ -30,7 +29,7 @@ public final class RedisUtil {
      * 指定缓存失效时间
      *
      * @param key  键
-     * @param time 时间(秒)
+     * @param time 时间(毫秒)
      * @return
      */
 
@@ -40,7 +39,7 @@ public final class RedisUtil {
 
             if (time > 0) {
 
-                redisTemplate.expire(key, time, TimeUnit.SECONDS);
+                redisTemplate.expire(key, time, TimeUnit.MILLISECONDS);
 
             }
 
@@ -175,7 +174,7 @@ public final class RedisUtil {
 
             if (time > 0) {
 
-                redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
+                redisTemplate.opsForValue().set(key, value, time, TimeUnit.MILLISECONDS);
 
             } else {
 
