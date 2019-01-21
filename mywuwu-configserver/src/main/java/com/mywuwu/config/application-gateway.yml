@@ -26,23 +26,45 @@ spring:
         predicates:
           - Path=/MYWUWU-WEBSOCKET/**
         filters:
-          - StripPrefix=1
-          - JWTAuth
+#          - StripPrefix=1
+#          - AuthF
           - name: Retry
             args:
               retries: 3 #重试次数，不包含本次，默认3
               status: 404 #重试次数，不包含本次，默认无
               statusSeries: 500 #重试的系列 100 info 200 success 300 redirect 400 cliet
               method: GET #重试请求 默认GET
+#redis配置
+#spring:
+  redis:
+  # Redis数据库索引（默认为0）
+    database: 1
+    # Redis服务器地址
+    host: 192.168.6.122
+  # Redis服务器连接密码（默认为空）
+    password:
+  # Redis服务器连接端口
+    port: 6379
+    timeout: 360s # 连接超时时间（毫秒）
+    lettuce:
+      pool:
+        max-active:  100 # 连接池最大连接数（使用负值表示没有限制）
+        max-idle: 100 # 连接池中的最大空闲连接
+        min-idle: 50 # 连接池中的最小空闲连接
+        max-wait: 600s # 连接池最大阻塞等待时间（使用负值表示没有限制）
 
 eureka:
+  instance:
+    preferIpAddress: true
+#    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
   client:
     serviceUrl:
-      defaultZone: http://localhost:8071/eureka/
+      defaultZone: http://192.168.6.248:8071/eureka/
 
 feign:
   hystrix:
     enabled: true
+
 
 #数据源配置信息
 datasource:
@@ -79,6 +101,7 @@ logging:
 mybatis:
   type-aliases-package: com.mywuwu.entity
   mapper-locations: classpath*:mapper/*.xml
+mapper:
   mappers: com.mywuwu.common.mapper.MyMapper
   not-empty: false
   identity: MYSQL
@@ -89,3 +112,35 @@ pagehelper:
   reasonable: true
   supportMethodsArguments: true
   params: count\=countSql
+
+  #jwt生成密钥
+jwt:
+  secret:
+    key: LIANGLELE
+
+  #token黑名单 存储key
+  blacklist:
+    key:
+      format: JWT_BLACKLIST::%s
+
+
+        #refreshToken 存储key
+  refresh:
+    token:
+      key:
+        format: JWT_REFRESH_TOKEN::%s
+
+#token过期时间：1min
+token:
+  expire:
+    time: 60000
+
+#refreshToken过期时间：2min
+refresh:
+  token:
+    expire:
+      time: 120000
+  #不进行token拦截
+auth:
+  skip:
+    urls: /MYWUWU-GATEWAY-SERVICE/auth,/MYWUWU-GATEWAY-SERVICE/token/refresh,/MYWUWU-GATEWAY-SERVICE/hello
