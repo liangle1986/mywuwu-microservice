@@ -41,8 +41,8 @@ public class AuthController {
     @Value("${jwt.blacklist.key.format}")
     private String jwtBlacklistKeyFormat;
 
-    @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+//    @Autowired
+//    private StringRedisTemplate stringRedisTemplate;
 
     @Autowired
     private RedisUtil redisUtil;
@@ -68,12 +68,12 @@ public class AuthController {
 
             //生成JWT
             String token = JwtTokenUtils.createToken(userName);
-            //生成refreshToken
+            //生成refreshToken 去掉暂时不需要用户给我自己拼接就好
             String refreshToken = UUID.randomUUID().toString().replaceAll("-", "");
             //保存refreshToken至redis，使用hash结构保存使用中的token以及用户标识
-            String refreshTokenKey = String.format(jwtRefreshTokenKeyFormat, refreshToken);
-            stringRedisTemplate.opsForHash().put(refreshTokenKey,
-                    "token", token);
+            String refreshTokenKey = String.format(jwtRefreshTokenKeyFormat, token);
+//            stringRedisTemplate.opsForHash().put(refreshTokenKey,
+//                    "token", token);
             redisUtil.hset(refreshTokenKey, "token", token);
 //            stringRedisTemplate.opsForHash().put(refreshTokenKey,
 //                    "userName", userName);

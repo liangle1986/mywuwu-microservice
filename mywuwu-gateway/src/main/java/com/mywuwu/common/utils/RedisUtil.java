@@ -29,7 +29,7 @@ public final class RedisUtil {
      * 指定缓存失效时间
      *
      * @param key  键
-     * @param time 时间(毫秒)
+     * @param time 时间(秒)
      * @return
      */
 
@@ -39,7 +39,7 @@ public final class RedisUtil {
 
             if (time > 0) {
 
-                redisTemplate.expire(key, time, TimeUnit.MILLISECONDS);
+                redisTemplate.expire(key, time, TimeUnit.SECONDS);
 
             }
 
@@ -64,7 +64,7 @@ public final class RedisUtil {
 
     public long getExpire(String key) {
 
-        return redisTemplate.getExpire(key, TimeUnit.SECONDS);
+        return redisTemplate.getExpire(key, TimeUnit.MILLISECONDS);
 
     }
 

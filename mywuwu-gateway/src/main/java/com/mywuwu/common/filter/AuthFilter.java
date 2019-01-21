@@ -1,8 +1,11 @@
 package com.mywuwu.common.filter;
 
+import com.mywuwu.common.utils.JwtTokenDto;
 import com.mywuwu.common.utils.JwtTokenUtils;
+import com.mywuwu.common.utils.RedisUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -38,8 +41,14 @@ public class AuthFilter implements GlobalFilter, Ordered {
     @Value("${jwt.blacklist.key.format}")
     private String jwtBlacklistKeyFormat;
 
-//    @Autowired
+    @Value("${jwt.refresh.token.key.format}")
+    private String jwtRefreshTokenKeyFormat;
+
+
+    //    @Autowired
 //    private StringRedisTemplate stringRedisTemplate;
+    @Autowired
+    private RedisUtil redisUtil;
 
     @Override
     public int getOrder() {
@@ -53,8 +62,15 @@ public class AuthFilter implements GlobalFilter, Ordered {
         if (Arrays.asList(skipAuthUrls).contains(url)) {
             return chain.filter(exchange);
         }
+
+        // 获取信息的解码形式
+        if (JwtTokenDto.secretKey == null) {
+            JwtTokenDto.secretKey = secretKey;
+        }
+
         //从请求头中取出token
-        String token = exchange.getRequest().getHeaders().getFirst("Authorization");
+        String token = exchange.getRequest().getQueryParams().getFirst("token");
+//                getHeaders().getFirst("token");
         //未携带token或token在黑名单内
         if (token == null ||
                 token.isEmpty() ||
@@ -68,7 +84,9 @@ public class AuthFilter implements GlobalFilter, Ordered {
             return originalResponse.writeWith(Flux.just(buffer));
         }
         //取出token包含的身份
-        String userName = JwtTokenUtils.getUsername(token);
+
+        String userName = (String) redisUtil.hget(String.format(jwtRefreshTokenKeyFormat, token), "userName");
+        //JwtTokenUtils.getUsername(token);
         if (userName.isEmpty()) {
             ServerHttpResponse originalResponse = exchange.getResponse();
             originalResponse.setStatusCode(HttpStatus.OK);
@@ -79,7 +97,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
             return originalResponse.writeWith(Flux.just(buffer));
         }
         //将现在的request，添加当前身份
-        ServerHttpRequest mutableReq = exchange.getRequest().mutate().header("Authorization-UserName", userName).build();
+        ServerHttpRequest mutableReq = exchange.getRequest().mutate().header("token-userName", userName).build();
         ServerWebExchange mutableExchange = exchange.mutate().request(mutableReq).build();
         return chain.filter(mutableExchange);
     }
@@ -92,7 +110,6 @@ public class AuthFilter implements GlobalFilter, Ordered {
      */
     private boolean isBlackToken(String token) {
         assert token != null;
-        return false;
-//        return stringRedisTemplate.hasKey(String.format(jwtBlacklistKeyFormat, token));
+        return redisUtil.hasKey(String.format(jwtBlacklistKeyFormat, token));
     }
 }

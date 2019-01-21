@@ -1,8 +1,10 @@
 package com.mywuwu.controller;
 
 import com.mywuwu.common.annotation.CurrentUser;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 
 /**
  * @Auther: 梁乐乐
@@ -20,8 +22,8 @@ public class HelloController {
 
 
     @GetMapping("/hello1")
-    public String hello1(String userName){
-        return "Hello," + userName;
+    public String hello1(String userName, ServerHttpRequest request){
+        return "Hello," + userName + request.getHeaders().getFirst("token-userName");
     }
 
 
